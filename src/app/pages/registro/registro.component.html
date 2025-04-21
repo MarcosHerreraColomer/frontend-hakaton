@@ -1,0 +1,35 @@
+<h2>Registro de Usuario</h2>
+
+<form (ngSubmit)="registrarUsuario()" #form="ngForm">
+  <!-- DNI -->
+  <label for="dni">DNI:</label>
+  <input type="text" id="dni" name="dni" [(ngModel)]="usuario.dni" required><br><br>
+
+  <!-- Nombre -->
+  <label for="nombre">Nombre:</label>
+  <input type="text" id="nombre" name="nombre" [(ngModel)]="usuario.nombre" required><br><br>
+
+  <!-- Código Postal -->
+  <label for="cp">Código Postal:</label>
+  <input type="text" id="cp" name="cp" [(ngModel)]="usuario.cp" required><br><br>
+
+  <!-- Buscador -->
+  <label for="busqueda">Buscar municipio:</label>
+  <input type="text" id="busqueda" [(ngModel)]="busquedaMunicipio" name="busqueda" (input)="filtrarMunicipios()"><br><br>
+
+  <!-- Selector de Municipio -->
+  <label for="municipio">Municipio:</label>
+  <select id="municipio" name="municipio_id" [(ngModel)]="usuario.municipio_id" required>
+    <option *ngFor="let municipio of municipiosFiltrados" [value]="municipio.id">
+      {{ municipio.nombre }}
+    </option>
+  </select><br><br>
+
+  <!-- Botón de envío -->
+  <button type="submit">Registrarse</button>
+</form>
+
+<!-- Resultado de contraseña -->
+<div *ngIf="contrasenaGenerada">
+  <p>Tu contraseña generada es: <strong>{{ contrasenaGenerada }}</strong></p>
+</div>
