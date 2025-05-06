@@ -9,19 +9,23 @@
   <label for="nombre">Nombre:</label>
   <input type="text" id="nombre" name="nombre" [(ngModel)]="usuario.nombre" required><br><br>
 
+  <!-- Email -->
+  <label for="email">Email:</label>
+  <input type="email" id="email" name="email" [(ngModel)]="usuario.email" required><br><br>
+
   <!-- Código Postal -->
   <label for="cp">Código Postal:</label>
   <input type="text" id="cp" name="cp" [(ngModel)]="usuario.cp" required><br><br>
 
-  <!-- Buscador -->
+  <!-- Buscador de municipios -->
   <label for="busqueda">Buscar municipio:</label>
-  <input type="text" id="busqueda" [(ngModel)]="busquedaMunicipio" name="busqueda" (input)="filtrarMunicipios()"><br><br>
+  <input type="text" id="busqueda" [(ngModel)]="busquedaMunicipio" name="busquedaMunicipio" (input)="filtrarMunicipios()"><br><br>
 
-  <!-- Selector de Municipio -->
-  <label for="municipio">Municipio:</label>
-  <select id="municipio" name="municipio_id" [(ngModel)]="usuario.municipio_id" required>
+  <!-- Selector de municipios -->
+  <label for="municipio_id">Selecciona tu municipio:</label>
+  <select id="municipio_id" name="municipio_id" [(ngModel)]="usuario.municipio_id" required>
     <option *ngFor="let municipio of municipiosFiltrados" [value]="municipio.id">
-      {{ municipio.nombre }}
+      {{ municipio.nombre }} ({{ municipio.provincia }})
     </option>
   </select><br><br>
 
@@ -29,7 +33,7 @@
   <button type="submit">Registrarse</button>
 </form>
 
-<!-- Resultado de contraseña -->
+<!-- Resultado -->
 <div *ngIf="contrasenaGenerada">
   <p>Tu contraseña generada es: <strong>{{ contrasenaGenerada }}</strong></p>
 </div>

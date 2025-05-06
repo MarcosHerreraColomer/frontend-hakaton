@@ -1,1 +1,18 @@
-<router-outlet></router-outlet>
+<header>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Escudo_de_Espa%C3%B1a_%28mazonado%29.svg/1024px-Escudo_de_Espa%C3%B1a_%28mazonado%29.svg.png" alt="Escudo de España">
+    <h1>Sistema Electoral Nacional</h1>
+  
+    <!-- Menú de navegación -->
+    <nav style="margin-left: auto;">
+      <button routerLink="/menu">Inicio</button>
+      <button routerLink="/registro">Registro</button>
+      <button routerLink="/votar">Votación</button>
+      <button routerLink="/admin">Admin</button>
+      <button routerLink="/login">Login</button>
+    </nav>
+  </header>
+  
+  <main>
+    <router-outlet></router-outlet>
+  </main>
+  

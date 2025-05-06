@@ -14,8 +14,10 @@ export class RegistroComponent implements OnInit {
   usuario = {
     dni: '',
     nombre: '',
+    email: '',
     cp: '',
-    municipio_id: null
+    municipio_id: null,
+    es_admin: false // siempre false por seguridad
   };
 
   municipios: any[] = [];
@@ -47,6 +49,8 @@ export class RegistroComponent implements OnInit {
   }
 
   registrarUsuario(): void {
+    this.usuario.es_admin = false; // forzamos a false en el código
+
     console.log('📨 Enviando usuario:', this.usuario);
     this.http.post<any>('http://localhost:8080/api/usuarios', this.usuario)
       .subscribe({

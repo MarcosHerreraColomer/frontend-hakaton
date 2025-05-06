@@ -1,1 +1,11 @@
-<p>votacion works!</p>
+<h2>Elecciones Municipales</h2>
+
+<label for="partido">Selecciona tu partido:</label>
+<select [(ngModel)]="partidoSeleccionado" id="partido">
+  <option *ngFor="let partido of partidos" [value]="partido.id">
+    {{ partido.nombre }} ({{ partido.siglas }}) - {{ partido.cabezaLista }}
+  </option>
+</select>
+
+<br><br>
+<button (click)="votar()">🗳️ Votar</button>

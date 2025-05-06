@@ -1,0 +1,58 @@
+/* --------- ESTILO INSTITUCIONAL GOBIERNO DE ESPAÑA --------- */
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+  }
+  
+  /* Cabecera institucional */
+  header {
+    display: flex;
+    align-items: center;
+    background-color: #ffcc00;
+    padding: 10px 20px;
+    border-bottom: 3px solid #aa0000;
+  }
+  
+  header img {
+    height: 60px;
+    margin-right: 20px;
+  }
+  
+  header h1 {
+    font-size: 1.6rem;
+    margin: 0;
+    color: #222;
+    text-transform: uppercase;
+  }
+  
+  /* Contenedor principal */
+  main {
+    padding: 20px;
+    max-width: 960px;
+    margin: auto;
+  }
+  
+  /* Botones estilo gobierno */
+  button {
+    background-color: #0033a0;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  button:hover {
+    background-color: #002080;
+  }
+  
+  /* Centrado general */
+  h2 {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
