@@ -1,19 +1,31 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-@Injectable({ providedIn: 'root' })
+@Injectable({
+  providedIn: 'root'
+})
 export class PartidoService {
-  private baseUrl = 'http://localhost:8080/api/partidos';
+  private apiUrl = 'http://localhost:8080/api/partidos';
 
   constructor(private http: HttpClient) {}
 
-  obtenerPartidosMunicipalesPorToken(): Observable<any> {
-    const token = localStorage.getItem('token');
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.http.get(`${this.baseUrl}/municipales`, { headers });
+  // Municipales
+  obtenerPartidosMunicipalesPorToken(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/municipales`);
   }
 
+  // Autonómicos
+  obtenerPartidosAutonomicosPorToken(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/autonomicos`);
+  }
+
+  // Nacionales
+  obtenerPartidosNacionales(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/nacionales`);
+  }
+
+  // Registrar voto
   registrarVoto(voto: any): Observable<any> {
     return this.http.post('http://localhost:8080/api/votos', voto);
   }

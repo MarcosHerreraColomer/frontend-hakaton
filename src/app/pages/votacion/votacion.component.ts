@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PartidoService } from '../../services/partido.service';
+import { EleccionService } from '../../services/eleccion.service';
 import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-votacion',
@@ -13,40 +15,73 @@ import { FormsModule } from '@angular/forms';
 export class VotacionComponent implements OnInit {
   partidos: any[] = [];
   partidoSeleccionado: number = 0;
+  codigoAmbito: string = '';
+  tipoEleccion: string = '';
 
-  constructor(private partidoService: PartidoService) {}
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private partidoService: PartidoService,
+    private eleccionService: EleccionService
+  ) {}
 
   ngOnInit(): void {
-    this.partidoService.obtenerPartidosMunicipalesPorToken().subscribe({
+    const path = this.router.url;
+    if (path.includes('municipal')) {
+      this.tipoEleccion = 'municipal';
+      this.partidoService.obtenerPartidosMunicipalesPorToken().subscribe({
+        next: (data) => {
+          this.partidos = data;
+          console.log('✅ Partidos municipales cargados:', data);
+        }
+      });
+    } else if (path.includes('autonomica')) {
+      this.tipoEleccion = 'autonomica';
+      this.partidoService.obtenerPartidosAutonomicosPorToken().subscribe({
+        next: (data) => {
+          this.partidos = data;
+          console.log('✅ Partidos autonómicos cargados:', data);
+        }
+      });
+    } else if (path.includes('nacional')) {
+      this.tipoEleccion = 'nacional';
+      this.partidoService.obtenerPartidosNacionales().subscribe({
+        next: (data) => {
+          this.partidos = data;
+          console.log('✅ Partidos nacionales cargados:', data);
+        }
+      });
+    }
+
+    // Cargar elección activa según tipo
+    this.eleccionService.getEleccionesPorTipo(this.tipoEleccion).subscribe({
       next: (data) => {
-        this.partidos = data;
-        console.log('✅ Partidos cargados:', data);
-      },
-      error: (err) => {
-        console.error('❌ Error al cargar partidos:', err);
+        if (data.length > 0) {
+          this.codigoAmbito = data[0].codigo_ambito;
+          console.log('📦 Código ámbito cargado:', this.codigoAmbito);
+        }
       }
     });
   }
 
   votar(): void {
-    if (this.partidoSeleccionado) {
+    if (this.partidoSeleccionado && this.codigoAmbito) {
       const voto = {
         partido_id: this.partidoSeleccionado,
-        eleccion_id: this.partidoSeleccionado, // puedes ajustar esto si tienes ID diferente
-        tipo: 'municipal'
+        eleccion_id: this.codigoAmbito,
+        tipo: this.tipoEleccion
       };
 
       this.partidoService.registrarVoto(voto).subscribe({
         next: () => {
-          alert('✅ ¡Tu voto ha sido registrado para el partido ID: ' + this.partidoSeleccionado + '!');
+          alert('✅ ¡Tu voto ha sido registrado!');
         },
-        error: (err) => {
-          console.error('❌ Error al registrar el voto en backend:', err);
-          alert('Error al registrar el voto en backend');
+        error: () => {
+          alert('❌ Error al registrar el voto');
         }
       });
     } else {
-      alert('⚠️ Selecciona un partido para poder votar.');
+      alert('⚠️ Selecciona un partido y espera a que se cargue la elección.');
     }
   }
 }
