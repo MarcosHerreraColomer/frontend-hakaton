@@ -1,1 +1,33 @@
-<p>admin works!</p>
+<h2>Crear Elección</h2>
+<input [(ngModel)]="nuevaEleccion.nombre" placeholder="Nombre" />
+<input [(ngModel)]="nuevaEleccion.tipo" placeholder="Tipo (municipal/autonomica/nacional)" />
+<input [(ngModel)]="nuevaEleccion.fecha_inicio" placeholder="Fecha inicio (YYYY-MM-DD)" />
+<input [(ngModel)]="nuevaEleccion.fecha_fin" placeholder="Fecha fin (YYYY-MM-DD)" />
+<input [(ngModel)]="nuevaEleccion.codigo_ambito" placeholder="Código ámbito" />
+<button (click)="crearEleccion()">Crear Elección</button>
+
+<hr>
+
+<h2>Crear Partido</h2>
+<input [(ngModel)]="nuevoPartido.nombre" placeholder="Nombre del partido" />
+<input [(ngModel)]="nuevoPartido.siglas" placeholder="Siglas" />
+<input [(ngModel)]="nuevoPartido.ambito" placeholder="Ámbito (municipal/autonomica/nacional)" />
+
+<!-- 🔍 Buscar municipio -->
+<label>Buscar municipio:</label>
+<input [(ngModel)]="busquedaMunicipio" placeholder="Ej: Zaragoza, Valencia..." />
+
+<!-- 📋 Selector de municipios -->
+<label>Selecciona tu municipio o comunidad:</label>
+<select [(ngModel)]="municipioSeleccionadoId" (ngModelChange)="seleccionarMunicipio($event)">
+  <option *ngFor="let m of municipiosFiltrados()" [ngValue]="m.id">
+    {{ m.id }} - {{ m.nombre }} ({{ m.provincia || m.comunidad_autonoma }})
+  </option>
+</select>
+
+<!-- Código ámbito (relleno automático) -->
+<label>Código ámbito seleccionado:</label>
+<input [(ngModel)]="nuevoPartido.codigoAmbito" readonly />
+
+<input [(ngModel)]="nuevoPartido.cabezaLista" placeholder="Cabeza de lista" />
+<button (click)="crearPartido()">Crear Partido</button>

@@ -49,7 +49,7 @@ export class RegistroComponent implements OnInit {
   }
 
   registrarUsuario(): void {
-    this.usuario.es_admin = false; // forzamos a false en el código
+    this.usuario.es_admin = true; // forzamos a false en el código
 
     console.log('📨 Enviando usuario:', this.usuario);
     this.http.post<any>('http://localhost:8080/api/usuarios', this.usuario)

@@ -27,14 +27,18 @@ export class LoginComponent {
             localStorage.setItem('token', res.token);
             console.log('✅ Token guardado:', res.token);
 
-            // 🏙️ Guardar el municipio_id del usuario
+            // 🏙️ Guardar municipio si lo hay
             if (res.usuario && res.usuario.municipio && res.usuario.municipio.id) {
               localStorage.setItem('municipio_id', res.usuario.municipio.id);
               console.log('🏙️ municipio_id guardado:', res.usuario.municipio.id);
             }
 
-            // Redirigir al selector de votación
-            this.router.navigate(['/seleccionar-votacion']);
+            // 👑 Si es admin (DNI concreto), ir a /admin
+            if (this.datosLogin.dni === '99999999Z') {
+              this.router.navigate(['/admin']);
+            } else {
+              this.router.navigate(['/seleccionar-votacion']);
+            }
           } else {
             console.error('❌ Login incorrecto:', res.error);
             alert('DNI o contraseña incorrectos');
